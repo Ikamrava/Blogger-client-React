@@ -17,7 +17,7 @@ function App() {
       <>
       <Header/>
       <Outlet/>
-      <Footer/>
+      
       </>
       
     )
@@ -62,10 +62,10 @@ function App() {
 
 ])
   return (
-    <div className=" mx-auto max-w-6xl">
+    <div className=" mx-auto max-w-6xl px-5">
       
       <div className=" mx-auto">
-        <div className="  flex flex-col mx-auto items-center border-2 ">
+        <div className="  flex flex-col mx-auto items-center  ">
           <RouterProvider router = {router}/> 
         </div>
         
