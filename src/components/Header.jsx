@@ -30,7 +30,7 @@ export default function Header() {
           <Link className=' text-gray-700' to="/?cat=food">
             <h6>FOOD</h6>
           </Link>
-          <span>User</span>
+          <span><a href="/register">Register</a></span>
           <span>Logout</span>
           <span className='underline bg-slate-700 w-[50px] h-[50px] text-white rounded-full cursor-pointer text-center flex items-center justify-center hover:scale-105 '><a href="/write">Post</a></span>
         </div>
