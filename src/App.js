@@ -1,4 +1,4 @@
-import {createBrowserRouter,RouterProvider,Route, Outlet} from "react-router-dom"
+import {createBrowserRouter,RouterProvider,Outlet} from "react-router-dom"
 import './App.css';
 import Home from "./pages/Home";
 import Register from "./pages/Register";
@@ -6,7 +6,7 @@ import Login from "./pages/Login";
 import Single from "./pages/Single";
 import Write from "./pages/Write";
 import Header from "./components/Header";
-import Footer from "./components/Footer";
+
 
 
 
