@@ -10,7 +10,7 @@ function Register() {
   async function registerHandler(e){
    e.preventDefault()
    
-    axios.post('http://localhost:8020/register',{userName,email,password}
+    axios.post('https://evening-plains-24398.herokuapp.com/register',{userName,email,password}
     ).then(function (response) {
       console.log(response);
  
