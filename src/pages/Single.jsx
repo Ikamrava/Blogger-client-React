@@ -1,16 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import image from "../2.jpg"
 import { AiFillDelete,AiFillEdit } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Menu from '../components/Menu';
+import axios from 'axios';
 
 
 function Single() {
+
+  const [post,setPost] = useState({})
+  const location = useLocation()
+  const postId = location.pathname.split("/")[2]
+  console.log(postId)
+
+  useEffect(()=>{
+
+    const fetchData = async ()=>{
+      try {
+        axios.defaults.withCredentials = true;
+        const res = await axios.get(`http://localhost:8020/posts/${postId}`)
+        console.log(res.data)
+        setPost(res.data)
+
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchData()
+  },[postId])
+
+
   return (
     <div className=' mt-10 flex flex-col md:flex-row  mx-auto gap-8 '>
       
       <div className='flex flex-col items-start gap-5 flex-[1.5]'>
-        <img className='  shadow-lg text-center object-cover w-[100%]' src={image} alt="" />
+        <img className='  shadow-lg text-center object-cover w-[100%]' src={post[0]?.image} alt="" />
         <div className='  flex mt-2 gap-5 items-center   '>
           <img className=' w-12 h-12 rounded-full ' src={image} alt="" />
           <div className=' flex flex-col'>
@@ -24,8 +49,8 @@ function Single() {
           
         </div>
         <div className=''>
-        <h1 className=' font-bold'>Where does it come from?</h1>
-        <p className=' text-justify'>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
+        <h1 className=' font-bold'>{post[0]?.title}</h1>
+        <p className=' text-justify'>{post[0]?.desc}</p>
       </div>
       </div>
       <div className='flex-[.5]'>

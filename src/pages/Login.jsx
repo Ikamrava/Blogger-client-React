@@ -38,9 +38,9 @@ function Login() {
       <button className=' bg-slate-700 text-white p-2 rounded-lg font-bold w-[90%] mb-5' onClick={registerHandler}>Login</button>
       {err && <p className=' text-red-600'>{err}</p>}
       
-      <p>Do you have an account ?</p>
+      <p>Don't you have an account ?</p>
       
-      <Link to="/login" className=' text-slate-800 underline'>Login</Link>
+      <Link to="/register" className=' text-slate-800 underline'>Register</Link>
     </form>
   </div>
   )

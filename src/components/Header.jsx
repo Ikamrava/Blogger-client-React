@@ -7,12 +7,12 @@ import logo from "../Logo.png"
 
 
 export default function Header() {
-  const {currentUser} = useContext(AuthCotext)
+  const {currentUser ,logout} = useContext(AuthCotext)
   console.log(currentUser)
   return (
     <div className=' w-[100%] mt-5'>
       <div className=' flex items-center justify-between w-[100%] px-5'>
-        <div className=' h-10'><img src={logo} alt="" className=' h-[100%] w-30'/></div>
+        <div className=' h-10'><Link to="/"><img src={logo} alt="" className=' h-[100%] w-30'/></Link></div>
         <div className='hidden md:block md:flex sm:gap-3 md:items-center md:justify-center'>
           <Link className=' text-gray-700' to="/?cat=art">
             <h6>ART</h6>
@@ -32,9 +32,17 @@ export default function Header() {
           <Link className=' text-gray-700' to="/?cat=food">
             <h6>FOOD</h6>
           </Link>
-          <span><a href="/register">Register</a></span>
-          <span className=' capitalize'>{currentUser?.username}</span>
           <span className='underline bg-slate-700 w-[50px] h-[50px] text-white rounded-full cursor-pointer text-center flex items-center justify-center hover:scale-105 '><a href="/write">Post</a></span>
+          { currentUser ? <span onClick={logout} className=" cursor-pointer">Logout</span> : <span><a href="/login">Login</a></span>}
+          {currentUser && 
+            <div className=' flex flex-col items-center bg-yellow-500 rounded-full w-20 h-20 pt-3 '>
+              <span>Hi</span>
+              <span className=' capitalize'>{currentUser?.username}</span>
+            </div>
+          }
+          
+          
+          
         </div>
         <div className='sm:hidden'><GiHamburgerMenu/></div>
       </div>
