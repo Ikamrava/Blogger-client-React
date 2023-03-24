@@ -1,20 +1,32 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from "axios"
 
 function Register() {
   const [userName,setUsername] =useState("")
   const [password,setPassword] =useState("")
   const [email,setEmail] =useState("")
+  const [err,setErr] = useState(null)
+  const navigate = useNavigate()
+
 
   async function registerHandler(e){
    e.preventDefault()
+   try{
+    if (userName && password && email){
+      setErr(null)
+      
+      await axios.post('http://localhost:8020/register',{username:userName,email:email,password:password})
+      navigate("/login")
+      
+      
+     }else{
+      alert("Please fill out all fields")
+     }
+   }catch(e){
+    setErr(e.response.data)
+   }
    
-    axios.post('https://evening-plains-24398.herokuapp.com/register',{userName,email,password}
-    ).then(function (response) {
-      console.log(response);
- 
-    })
   }
 
   return (
@@ -25,7 +37,10 @@ function Register() {
       <input className=' border-b-2 border-black p-1 mb-5'required type="email" placeholder='Email' value={email} onChange={(e)=>setEmail(e.target.value)} />
       <input className=' border-b-2 border-black p-1 mb-8' required type="password" placeholder='Password' value={password} onChange={(e)=>setPassword(e.target.value)} />
       <button className=' bg-slate-700 text-white p-2 rounded-lg font-bold w-[90%] mb-5' onClick={registerHandler}>Register</button>
+      {err && <p className=' text-red-600'>{err}</p>}
+      
       <p>Do you have an account ?</p>
+      
       <Link to="/login" className=' text-slate-800 underline'>Login</Link>
     </form>
   </div>
