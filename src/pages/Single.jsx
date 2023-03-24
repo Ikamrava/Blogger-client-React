@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import image from "../2.jpg"
 import { AiFillDelete,AiFillEdit } from 'react-icons/ai';
 import { Link, useLocation } from 'react-router-dom';
 import Menu from '../components/Menu';
 import axios from 'axios';
+import moment from "moment"
+import { AuthCotext } from '../contect/authContext';
 
 
 function Single() {
@@ -11,7 +13,9 @@ function Single() {
   const [post,setPost] = useState({})
   const location = useLocation()
   const postId = location.pathname.split("/")[2]
-  console.log(postId)
+  const {currentUser} = useContext(AuthCotext)
+  console.log(currentUser)
+ 
 
   useEffect(()=>{
 
@@ -19,7 +23,7 @@ function Single() {
       try {
         axios.defaults.withCredentials = true;
         const res = await axios.get(`http://localhost:8020/posts/${postId}`)
-        console.log(res.data)
+        
         setPost(res.data)
 
 
@@ -39,13 +43,15 @@ function Single() {
         <div className='  flex mt-2 gap-5 items-center   '>
           <img className=' w-12 h-12 rounded-full ' src={image} alt="" />
           <div className=' flex flex-col'>
-            <span>John</span>
-            <p>Posted 2 Days Ago</p>
+            <span className=' capitalize'>{post[0]?.username}</span>
+            <p className=' capitalize'>Postsed {moment(post[0]?.date).fromNow()}</p>
           </div>
+          {currentUser != null && currentUser.username ===  post[0]?.username &&
           <div className=' flex gap-2'>
             <Link to ="/write"><AiFillEdit size={20} color="green"/></Link>
             <Link><AiFillDelete size={20} color="red"/></Link>
           </div>
+          }
           
         </div>
         <div className=''>

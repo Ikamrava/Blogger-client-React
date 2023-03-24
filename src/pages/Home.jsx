@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import {data} from "../data"
+
 
 function Home() {
 
