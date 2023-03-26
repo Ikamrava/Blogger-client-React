@@ -39,7 +39,7 @@ function Home() {
 
      <div className='flex-1 mt-5'>
        <Link className=' text-center font-bold ' to={`/post/${item.id}`}>{item.title}</Link>
-       <p className='mt-2'>{item.des}</p>
+       <p className='mt-2'>{item.description}</p>
        <button className=' text-centr shadow-lg p-1 mt-2 px-2 cursor-pointer'>Read More</button>
      </div>
    </div>

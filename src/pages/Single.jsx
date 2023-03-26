@@ -56,7 +56,7 @@ function Single() {
         </div>
         <div className=''>
         <h1 className=' font-bold'>{post[0]?.title}</h1>
-        <p className=' text-justify'>{post[0]?.desc}</p>
+        <p className=' text-justify'>{post[0]?.description}</p>
       </div>
       </div>
       <div className='flex-[.5]'>

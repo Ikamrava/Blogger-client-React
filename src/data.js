@@ -1,8 +1,5 @@
 export const data = [
   
-  
-  
-  
   {
     id: 6,
     title: "MacBook Pro",
