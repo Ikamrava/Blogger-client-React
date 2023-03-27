@@ -14,11 +14,11 @@ export default function Header() {
       <div className=' flex items-center justify-between w-[100%] px-5'>
         <div className=' h-10'><Link to="/"><img src={logo} alt="" className=' h-[100%] w-30'/></Link></div>
         <div className='hidden md:block md:flex sm:gap-3 md:items-center md:justify-center'>
-          <Link className=' text-gray-700' to="/?cat=art">
-            <h6>ART</h6>
+          <Link className=' text-gray-700' to="/?cat=laptops">
+            <h6>LAPTOP</h6>
           </Link>
-          <Link className=' text-gray-700' to="/?cat=science">
-            <h6>SCIENCE</h6>
+          <Link className=' text-gray-700' to="/?cat=mobile">
+            <h6>MOBILE</h6>
           </Link>
           <Link className=' text-gray-700'to="/?cat=technology">
             <h6>TECHNOLOGY</h6>

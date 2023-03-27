@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import image from "../2.jpg"
 import { AiFillDelete,AiFillEdit } from 'react-icons/ai';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import Menu from '../components/Menu';
 import axios from 'axios';
 import moment from "moment"
@@ -14,7 +14,19 @@ function Single() {
   const location = useLocation()
   const postId = location.pathname.split("/")[2]
   const {currentUser} = useContext(AuthCotext)
+  const homenavigate = useNavigate()
   console.log(currentUser)
+
+  async function handleDelete(){
+    try {
+      axios.defaults.withCredentials = true;
+      await axios.delete(`http://localhost:8020/posts/${postId}`)
+      homenavigate("/")
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  
  
 
   useEffect(()=>{
@@ -25,6 +37,7 @@ function Single() {
         const res = await axios.get(`http://localhost:8020/posts/${postId}`)
         
         setPost(res.data)
+        console.log(post)
 
 
       } catch (error) {
@@ -48,8 +61,8 @@ function Single() {
           </div>
           {currentUser != null && currentUser.username ===  post[0]?.username &&
           <div className=' flex gap-2'>
-            <Link to ="/write"><AiFillEdit size={20} color="green"/></Link>
-            <Link><AiFillDelete size={20} color="red"/></Link>
+            <Link to = {"/write?edit=" +postId } state={post[0]}><AiFillEdit size={20} color="green"/></Link>
+            <Link><AiFillDelete size={20} color="red" onClick={handleDelete}/></Link>
           </div>
           }
           
@@ -60,7 +73,7 @@ function Single() {
       </div>
       </div>
       <div className='flex-[.5]'>
-        <Menu/>
+        <Menu cat = {post[0]?.cat}/>
       </div>
       
     </div>
