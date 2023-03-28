@@ -10,12 +10,18 @@ import { AuthCotext } from '../contect/authContext';
 
 function Single() {
 
+
   const [post,setPost] = useState({})
   const location = useLocation()
   const postId = location.pathname.split("/")[2]
   const {currentUser} = useContext(AuthCotext)
   const homenavigate = useNavigate()
-  console.log(currentUser)
+
+  const getText = (html)=>{
+    const doc = new DOMParser().parseFromString(html,"text/html")
+    return doc.body.textContent
+  }
+  
 
   async function handleDelete(){
     try {
@@ -34,11 +40,10 @@ function Single() {
     const fetchData = async ()=>{
       try {
         axios.defaults.withCredentials = true;
+        console.log(postId)
         const res = await axios.get(`http://localhost:8020/posts/${postId}`)
-        
         setPost(res.data)
         console.log(post)
-
 
       } catch (error) {
         console.log(error)
@@ -52,16 +57,16 @@ function Single() {
     <div className=' mt-10 flex flex-col md:flex-row  mx-auto gap-8 '>
       
       <div className='flex flex-col items-start gap-5 flex-[1.5]'>
-        <img className='  shadow-lg text-center object-cover w-[100%]' src={post[0]?.image} alt="" />
+        <img className='  shadow-lg text-center object-cover w-[100%]' src={post[0]?.imageurl} alt="" />
         <div className='  flex mt-2 gap-5 items-center   '>
           <img className=' w-12 h-12 rounded-full ' src={image} alt="" />
           <div className=' flex flex-col'>
             <span className=' capitalize'>{post[0]?.username}</span>
             <p className=' capitalize'>Postsed {moment(post[0]?.date).fromNow()}</p>
           </div>
-          {currentUser != null && currentUser.username ===  post[0]?.username &&
+          {currentUser != null && currentUser.id ===  post[0]?.uid &&
           <div className=' flex gap-2'>
-            <Link to = {"/write?edit=" +postId } state={post[0]}><AiFillEdit size={20} color="green"/></Link>
+            <Link to = {"/write?edit=" + postId } state={post[0]}><AiFillEdit size={20} color="green"/></Link>
             <Link><AiFillDelete size={20} color="red" onClick={handleDelete}/></Link>
           </div>
           }
@@ -69,7 +74,7 @@ function Single() {
         </div>
         <div className=''>
         <h1 className=' font-bold'>{post[0]?.title}</h1>
-        <p className=' text-justify'>{post[0]?.description}</p>
+        <p className=' text-justify'>{getText(post[0]?.description) }</p>
       </div>
       </div>
       <div className='flex-[.5]'>

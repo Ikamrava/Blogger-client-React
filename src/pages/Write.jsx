@@ -1,5 +1,6 @@
 import { upload } from '@testing-library/user-event/dist/upload';
 import axios from 'axios';
+import moment from 'moment';
 import React, { useContext, useState } from 'react'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -8,13 +9,17 @@ import { AuthCotext } from '../contect/authContext';
 
 function Write() {
   const state = useLocation().state
+  const location = useLocation()
+  const postId = location.pathname.split("/")[2]
   console.log(state)
+ 
   
   const [title,setTitle] =useState(state?.title ||"")
   const [desc,setDesc] =useState(state?.description ||"")
   const [file,setFile] =useState(null)
   const [cat,setCat] =useState(state?.cat ||"")
   const {currentUser} = useContext(AuthCotext)
+  const [result,setResult] = useState(null)
 
 
   async function uploadImage(){
@@ -23,29 +28,58 @@ function Write() {
       formData.append("file",file)
       axios.defaults.withCredentials = true;
       const res = await axios.post(`http://localhost:8020/uploads`,formData)
-      console.log(res)
-
       
-     } catch (error) {
-      console.log(error)
+      return res.data
+
+     } catch (e) {
+      setResult(e.response.data)
      }
   }
 
   async function publishHandler(e){
     e.preventDefault()
-    uploadImage()
-    // try {
-    //   axios.defaults.withCredentials = true;
-    //   await axios.post(`http://localhost:8020/posts`,{
-    //     title: title,
-    //     description:desc,
-    //     category:cat,
-    //     uid:currentUser.id
-    //   })
-      
-    // } catch (error) {
-    //   console.log(error)
-    // }
+
+    if(currentUser){
+      const imgUrl = await uploadImage()
+      try {
+        if (state){
+          axios.defaults.withCredentials = true
+          await axios.put(`http://localhost:8020/posts/${state.id}`, {
+          title: title,
+          description:desc,
+          category:cat,
+          uid:currentUser.id,
+          image:file ? imgUrl : "",
+          date : moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
+        })
+        setResult("Post has been edited")
+        setTitle("")
+        setDesc("")
+        setFile(null)
+  
+        }else{
+          axios.defaults.withCredentials = true
+          await axios.post(`http://localhost:8020/posts`, {
+          title: title,
+          description:desc,
+          category:cat,
+          uid:currentUser.id,
+          image:file?imgUrl: "",
+          date : moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
+        })
+        setResult("Post has been sent")
+        setTitle("")
+        setDesc("")
+        setFile(null)
+        }
+        
+      } catch (error) {
+        console.log(error)
+      }
+    }else{
+      setResult("Please login first")
+    }
+    
   
   }
 
@@ -61,35 +95,37 @@ function Write() {
           <h1 className=' font-bold'>Publish</h1>
           <span><b>Status: </b>Draft</span>
           <span><b>Visibility: </b>Public</span>
+          
           <input type="file" id="file"  onChange={(e)=>setFile(e.target.files[0])}/>
           <div className='flex gap-10 '>
             <button className=' border-2  font-bold rounded-lg p-1 border-slate-800'>Save as a draft</button>
             <button className=' border-2  font-bold rounded-lg p-1 border-slate-800' onClick={publishHandler}>Publish</button>
+            
           </div>
-          
+          {result && <p className=' text-red-600'>{result}</p>}
         </div>
         <div>
           <h1>Category</h1>
           <div>
             <div className='flex gap-1'>
-              <input type="radio" checked = {cat === "laptops"} name="cat" value="laptops" id="laptops"  onChange={(e)=>setCat(e.target.value)} />
-              <label htmlFor="laptops">Laptop</label>
+              <input type="radio" checked = {cat === "technology"} name="cat" value="technology" id="technology"  onChange={(e)=>setCat(e.target.value)} />
+              <label htmlFor="technology">Technology</label>
             </div>
             <div className='flex gap-1'>
-              <input type="radio" checked = {cat === "mobile"} name="cat" value="mobile" id="mobile" onChange={(e)=>setCat(e.target.value)} />
-              <label htmlFor="mobile">Mobile</label>
+              <input type="radio" checked = {cat === "art"} name="cat" value="art" id="art" onChange={(e)=>setCat(e.target.value)} />
+              <label htmlFor="art">Art</label>
             </div>
             <div className='flex gap-1'>
-              <input type="radio" checked = {cat === "tablet"} name="cat" value="tablet" id="tablet" onChange={(e)=>setCat(e.target.value)} />
-              <label htmlFor="tablet">Tablet</label>
+              <input type="radio" checked = {cat === "cinema"} name="cat" value="cinema" id="cinema" onChange={(e)=>setCat(e.target.value)} />
+              <label htmlFor="cinema">Cinema</label>
             </div>
             <div className='flex gap-1'>
-              <input type="radio" checked = {cat === "smartwatch"} name="cat" value="smartwatch" id="smartwatch" onChange={(e)=>setCat(e.target.value)} />
-              <label htmlFor="smartwatch">Smart Watch</label>
+              <input type="radio" checked = {cat === "food"} name="cat" value="food" id="food" onChange={(e)=>setCat(e.target.value)} />
+              <label htmlFor="food">Food</label>
             </div>
             <div className='flex gap-1'>
-              <input type="radio" checked = {cat === "earphone"} name="cat" value="earphone" id="earphone"  onChange={(e)=>setCat(e.target.value)}/>
-              <label htmlFor="earphone">Earphone</label>
+              <input type="radio" checked = {cat === "learning"} name="cat" value="learning" id="learning"  onChange={(e)=>setCat(e.target.value)}/>
+              <label htmlFor="learning">Learning</label>
             </div>
             
           </div>

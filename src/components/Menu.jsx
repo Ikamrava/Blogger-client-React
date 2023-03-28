@@ -6,6 +6,10 @@ import {data} from "../data"
 function Menu({cat}) {
   const [posts,setPosts] = useState([])
   console.log(cat)
+  const getText = (html)=>{
+    const doc = new DOMParser().parseFromString(html,"text/html")
+    return doc.body.textContent
+  }
 
   useEffect(()=>{
 
@@ -29,11 +33,11 @@ function Menu({cat}) {
         <div className='hidden md:flex md:flex-col  md:blobk  ' key={item.id}>
           <div className=' max-w-lg flex-1'>
           <Link className=' text-center font-bold ' to={`/post/${item.id}`}>{item.brand}</Link>
-            <img className=' w-[100%] shadow-2xl' src={item.image} alt="" />
+            <img className=' w-[100%] shadow-2xl' src={item.imageurl} alt="" />
           </div>
     
           <div className='flex-1 mt-5'>
-            <p className='mt-2'>{item.description}</p>
+            <p className='mt-2'>{getText(item.description) }</p>
             <button className=' text-centr shadow-lg p-1 mt-2 px-2 cursor-pointer'>Read More</button>
           </div>
         </div>

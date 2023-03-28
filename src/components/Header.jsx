@@ -14,24 +14,22 @@ export default function Header() {
       <div className=' flex items-center justify-between w-[100%] px-5'>
         <div className=' h-10'><Link to="/"><img src={logo} alt="" className=' h-[100%] w-30'/></Link></div>
         <div className='hidden md:block md:flex sm:gap-3 md:items-center md:justify-center'>
-          <Link className=' text-gray-700' to="/?cat=laptops">
-            <h6>LAPTOP</h6>
-          </Link>
-          <Link className=' text-gray-700' to="/?cat=mobile">
-            <h6>MOBILE</h6>
-          </Link>
-          <Link className=' text-gray-700'to="/?cat=technology">
+          <Link className=' text-gray-700' to="/?cat=technology">
             <h6>TECHNOLOGY</h6>
+          </Link>
+          <Link className=' text-gray-700' to="/?cat=art">
+            <h6>ART</h6>
           </Link>
           <Link className=' text-gray-700'to="/?cat=cinema">
             <h6>CINEMA</h6>
           </Link>
-          <Link className=' text-gray-700'to="/?cat=design">
-            <h6>DESIGN</h6>
-          </Link>
-          <Link className=' text-gray-700' to="/?cat=food">
+          <Link className=' text-gray-700'to="/?cat=food">
             <h6>FOOD</h6>
           </Link>
+          <Link className=' text-gray-700'to="/?cat=learning">
+            <h6>LEARNING</h6>
+          </Link>
+         
           <span className='underline bg-slate-700 w-[50px] h-[50px] text-white rounded-full cursor-pointer text-center flex items-center justify-center hover:scale-105 '><a href="/write">Post</a></span>
           { currentUser ? <span onClick={logout} className=" cursor-pointer">Logout</span> : <span><a href="/login">Login</a></span>}
           {currentUser && 
