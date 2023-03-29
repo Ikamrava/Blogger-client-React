@@ -41,14 +41,14 @@ function Single() {
         console.log(postId)
         const res = await axios.get(`https://evening-plains-24398.herokuapp.com/posts/${postId}`)
         setPost(res.data)
-        console.log(post)
+       
 
       } catch (error) {
         console.log(error)
       }
     }
     fetchData()
-  },[post,postId])
+  },[postId])
 
 
   return (
