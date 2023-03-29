@@ -11,14 +11,14 @@ export const AuthContectProvider = ({children}) =>{
 
     const login = async (username,password) =>{
          axios.defaults.withCredentials = true;
-         const res = await axios.post('http://localhost:8020/login',{username:username,password:password})
+         const res = await axios.post('https://evening-plains-24398.herokuapp.com/login',{username:username,password:password})
 
         setCurrentUser(res.data)
     }
 
     const logout = async (input) =>{
         axios.defaults.withCredentials = true;
-       await axios.post('http://localhost:8020/logout')
+       await axios.post('https://evening-plains-24398.herokuapp.com/logout')
        setCurrentUser(null)
     }
 

@@ -16,7 +16,7 @@ function Menu({cat}) {
     const fetchData = async ()=>{
       try {
         axios.defaults.withCredentials = true;
-        const res = await axios.get(`http://localhost:8020/posts/?cat=${cat}`)
+        const res = await axios.get(`https://evening-plains-24398.herokuapp.com/posts/?cat=${cat}`)
         console.log(res.data)
         setPosts(res.data)
 

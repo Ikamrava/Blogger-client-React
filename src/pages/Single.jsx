@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import image from "../2.jpg"
 import { AiFillDelete,AiFillEdit } from 'react-icons/ai';
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Menu from '../components/Menu';
 import axios from 'axios';
 import moment from "moment"
@@ -18,16 +18,13 @@ function Single() {
   const {currentUser} = useContext(AuthCotext)
   const homenavigate = useNavigate()
 
-  const getText = (html)=>{
-    const doc = new DOMParser().parseFromString(html,"text/html")
-    return doc.body.textContent
-  }
+
   
 
   async function handleDelete(){
     try {
       axios.defaults.withCredentials = true;
-      await axios.delete(`http://localhost:8020/posts/${postId}`)
+      await axios.delete(`https://evening-plains-24398.herokuapp.com/posts/${postId}`)
       homenavigate("/")
     } catch (error) {
       console.log(error)
@@ -42,7 +39,7 @@ function Single() {
       try {
         axios.defaults.withCredentials = true;
         console.log(postId)
-        const res = await axios.get(`http://localhost:8020/posts/${postId}`)
+        const res = await axios.get(`https://evening-plains-24398.herokuapp.com/posts/${postId}`)
         setPost(res.data)
         console.log(post)
 
