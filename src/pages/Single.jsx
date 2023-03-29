@@ -48,7 +48,7 @@ function Single() {
       }
     }
     fetchData()
-  },[postId])
+  },[post,postId])
 
 
   return (
