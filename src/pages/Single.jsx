@@ -6,6 +6,7 @@ import Menu from '../components/Menu';
 import axios from 'axios';
 import moment from "moment"
 import { AuthCotext } from '../contect/authContext';
+import ReactQuill from 'react-quill';
 
 
 function Single() {
@@ -57,7 +58,7 @@ function Single() {
     <div className=' mt-10 flex flex-col md:flex-row  mx-auto gap-8 '>
       
       <div className='flex flex-col items-start gap-5 flex-[1.5]'>
-        <img className='  shadow-lg text-center object-cover w-[100%]' src={post[0]?.imageurl} alt="" />
+        <img className='  shadow-lg text-center object-cover w-[100%] max-w-lg' src={post[0]?.imageurl} alt="" />
         <div className='  flex mt-2 gap-5 items-center   '>
           <img className=' w-12 h-12 rounded-full ' src={image} alt="" />
           <div className=' flex flex-col'>
@@ -74,7 +75,11 @@ function Single() {
         </div>
         <div className=''>
         <h1 className=' font-bold'>{post[0]?.title}</h1>
-        <p className=' text-justify'>{getText(post[0]?.description) }</p>
+        <ReactQuill
+          value={post[0]?.description}
+          readOnly={true}
+          theme={"bubble"}
+              />
       </div>
       </div>
       <div className='flex-[.5]'>

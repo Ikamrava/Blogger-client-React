@@ -1,4 +1,4 @@
-import { upload } from '@testing-library/user-event/dist/upload';
+
 import axios from 'axios';
 import moment from 'moment';
 import React, { useContext, useState } from 'react'
@@ -7,13 +7,9 @@ import 'react-quill/dist/quill.snow.css';
 import { useLocation } from 'react-router-dom';
 import { AuthCotext } from '../contect/authContext';
 
+
 function Write() {
   const state = useLocation().state
-  const location = useLocation()
-  const postId = location.pathname.split("/")[2]
-  console.log(state)
- 
-  
   const [title,setTitle] =useState(state?.title ||"")
   const [desc,setDesc] =useState(state?.description ||"")
   const [file,setFile] =useState(null)
@@ -21,16 +17,23 @@ function Write() {
   const {currentUser} = useContext(AuthCotext)
   const [result,setResult] = useState(null)
 
+  
+
+  const fileHandler = (e)=>{
+    setFile(e.target.files[0])
+  }
+
 
   async function uploadImage(){
      try {
       const formData = new FormData()
-      formData.append("file",file)
+   
+        formData.append("file",file)
+      
+      
       axios.defaults.withCredentials = true;
       const res = await axios.post(`http://localhost:8020/uploads`,formData)
-      
       return res.data
-
      } catch (e) {
       setResult(e.response.data)
      }
@@ -38,6 +41,26 @@ function Write() {
 
   async function publishHandler(e){
     e.preventDefault()
+  
+   
+    if(title === "") {
+      setResult("Post should have a title")
+      return
+    }
+
+    if(desc === "") {
+      setResult("Post should have a description")
+      return
+    }
+
+    if(file === null) {
+      setResult("Please upload a photo")
+      return
+    }
+    if(cat === "") {
+      setResult("Please select a category")
+      return
+    }
 
     if(currentUser){
       const imgUrl = await uploadImage()
@@ -49,7 +72,7 @@ function Write() {
           description:desc,
           category:cat,
           uid:currentUser.id,
-          image:file ? imgUrl : "",
+          image:file ? imgUrl : "noImage",
           date : moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
         })
         setResult("Post has been edited")
@@ -64,7 +87,7 @@ function Write() {
           description:desc,
           category:cat,
           uid:currentUser.id,
-          image:file?imgUrl: "",
+          image:file ? imgUrl: "NoImage",
           date : moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
         })
         setResult("Post has been sent")
@@ -87,8 +110,8 @@ function Write() {
   return (
     <div className=' mt-10 flex flex-col md:flex-row  gap-5'>
       <div className=' flex flex-col gap-5'>
-        <input className=' border-2 border-blue-300 p-2' type="text" placeholder='Title' value={title} onChange={(e)=>setTitle(e.target.value)}/>
-        <ReactQuill className=' h-[100%]' theme="snow" value={desc} onChange={setDesc} />
+        <input className=' border-2 border-blue-300 p-2' type="text" placeholder='Title' value={title} required onChange={(e)=>setTitle(e.target.value)}/>
+        <ReactQuill className=' h-[100%]' theme="snow" value={desc} onChange={setDesc} required />
       </div>
       <div className=' flex flex-col gap-5'>
         <div className=' flex flex-col gap-5'>
@@ -96,7 +119,7 @@ function Write() {
           <span><b>Status: </b>Draft</span>
           <span><b>Visibility: </b>Public</span>
           
-          <input type="file" id="file"  onChange={(e)=>setFile(e.target.files[0])}/>
+          <input type="file" id="file"  onChange={fileHandler}/>
           <div className='flex gap-10 '>
             <button className=' border-2  font-bold rounded-lg p-1 border-slate-800'>Save as a draft</button>
             <button className=' border-2  font-bold rounded-lg p-1 border-slate-800' onClick={publishHandler}>Publish</button>
