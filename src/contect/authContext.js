@@ -10,15 +10,15 @@ export const AuthContectProvider = ({children}) =>{
     const [currentUser,setCurrentUser] = useState(JSON.parse(localStorage.getItem("user")) || null)
 
     const login = async (username,password) =>{
-         axios.defaults.withCredentials = true;
-         const res = await axios.post('https://evening-plains-24398.herokuapp.com/login',{username:username,password:password})
+        axios.defaults.withCredentials = true;
+         const res = await axios.post('https://ikam-weblog-server.onrender.com/login',{username:username,password:password})
 
         setCurrentUser(res.data)
     }
 
     const logout = async (input) =>{
         axios.defaults.withCredentials = true;
-       await axios.post('https://evening-plains-24398.herokuapp.com/logout')
+       await axios.post('https://ikam-weblog-server.onrender.com/logout')
        setCurrentUser(null)
     }
 
