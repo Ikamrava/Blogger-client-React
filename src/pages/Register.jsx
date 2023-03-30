@@ -30,18 +30,18 @@ function Register() {
   }
 
   return (
-    <div className='flex flex-col  gap-5 bg-lime-100 w-[100%] h-[100vh] items-center justify-center '>
-    <h1 className=' text-center bg-yellow-500 p-2 rounded-lg font-bold'>Input Your Information</h1>
-    <form action="" className='flex flex-col  max-w-sm bg-white p-20 shadow-lg items-center'  >
+    <div className='flex flex-col  gap-5  w-[100%] h-[100vh] items-center justify-center '>
+    <h1 className=' text-center bg-yellow-500 p-2 rounded-lg font-bold '>Input Your Information</h1>
+    <form action="" className='flex flex-col  max-w-sm rounded-lg p-20 shadow-lg items-center bg-slate-500'   >
       <input className=' border-b-2 border-black p-1 mb-5' required type="text" placeholder='Username'  value={userName} onChange={(e)=>setUsername(e.target.value)}/>
       <input className=' border-b-2 border-black p-1 mb-5'required type="email" placeholder='Email' value={email} onChange={(e)=>setEmail(e.target.value)} />
       <input className=' border-b-2 border-black p-1 mb-8' required type="password" placeholder='Password' value={password} onChange={(e)=>setPassword(e.target.value)} />
       <button className=' bg-slate-700 text-white p-2 rounded-lg font-bold w-[90%] mb-5' onClick={registerHandler}>Register</button>
       {err && <p className=' text-red-600'>{err}</p>}
       
-      <p>Do you have an account ?</p>
+      <p className=' text-white font-bold'>Do you have an account ?</p>
       
-      <Link to="/login" className=' text-slate-800 underline'>Login</Link>
+      <Link to="/login" className=' underline  text-white py-1 px-4 font-bold mt-1'>Login</Link>
     </form>
   </div>
   )

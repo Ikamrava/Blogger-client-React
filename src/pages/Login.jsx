@@ -30,17 +30,17 @@ function Login() {
   }
 
   return (
-    <div className='flex flex-col  gap-5 bg-lime-100 w-[100%] h-[100vh] items-center justify-center '>
+    <div className='flex flex-col  gap-5  w-[100%] h-[100vh] items-center justify-center '>
     <h1 className=' text-center bg-yellow-500 p-2 rounded-lg font-bold'>Log in to your account</h1>
-    <form action="" className='flex flex-col  max-w-sm bg-white p-20 shadow-lg items-center'  >
+    <form action="" className='flex flex-col  max-w-sm  p-20 shadow-lg items-center bg-slate-500 rounded-lg'  >
       <input className=' border-b-2 border-black p-1 mb-5' required type="text" placeholder='Username'  value={userName} onChange={(e)=>setUsername(e.target.value)}/>
       <input className=' border-b-2 border-black p-1 mb-8' required type="password" placeholder='Password' value={password} onChange={(e)=>setPassword(e.target.value)} />
       <button className=' bg-slate-700 text-white p-2 rounded-lg font-bold w-[90%] mb-5' onClick={registerHandler}>Login</button>
       {err && <p className=' text-red-600'>{err}</p>}
       
-      <p>Don't you have an account ?</p>
+      <p className=' text-white'>Don't you have an account ?</p>
       
-      <Link to="/register" className=' text-slate-800 underline'>Register</Link>
+      <Link to="/register" className='  text-white'>Register</Link>
     </form>
   </div>
   )
