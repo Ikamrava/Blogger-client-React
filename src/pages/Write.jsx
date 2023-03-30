@@ -67,7 +67,7 @@ function Write() {
       try {
         if (state){
           axios.defaults.withCredentials = true
-          await axios.put(`https://evening-plains-24398.herokuapp.com/posts/${state.id}`, {
+          await axios.put(`https://evening-plains-24398.herokuapp.com/posts${state.id}`, {
           title: title,
           description:desc,
           category:cat,
@@ -82,7 +82,7 @@ function Write() {
   
         }else{
           axios.defaults.withCredentials = true
-          await axios.post(`http://localhost:8020/posts`, {
+          await axios.post(`https://evening-plains-24398.herokuapp.com/posts`, {
           title: title,
           description:desc,
           category:cat,
