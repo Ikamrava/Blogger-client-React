@@ -38,7 +38,7 @@ function Single() {
     const fetchData = async ()=>{
       try {
         axios.defaults.withCredentials = true;
-        console.log(postId)
+        
         const res = await axios.get(`https://evening-plains-24398.herokuapp.com/posts/${postId}`)
         setPost(res.data)
        
