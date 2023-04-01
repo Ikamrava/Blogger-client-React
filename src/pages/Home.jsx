@@ -15,7 +15,7 @@ function Home() {
     const fetchData = async ()=>{
       try {
         axios.defaults.withCredentials = true;
-        const res = await axios.get(`https://evening-plains-24398.herokuapp.com/posts/${cat}`)
+        const res = await axios.get(`https://ikam-weblog-server.onrender.com/posts/${cat}`)
         setPosts(res.data)
         
       } catch (error) {

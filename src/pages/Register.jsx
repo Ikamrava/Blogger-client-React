@@ -16,7 +16,7 @@ function Register() {
     if (userName && password && email){
       setErr(null)
       
-      await axios.post('https://evening-plains-24398.herokuapp.com/register',{username:userName,email:email,password:password})
+      await axios.post('https://ikam-weblog-server.onrender.com/register',{username:userName,email:email,password:password})
       navigate("/login")
       
       

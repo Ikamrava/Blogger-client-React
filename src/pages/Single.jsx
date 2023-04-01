@@ -24,7 +24,7 @@ function Single() {
   async function handleDelete(){
     try {
       axios.defaults.withCredentials = true;
-      await axios.delete(`https://evening-plains-24398.herokuapp.com/posts/${postId}`)
+      await axios.delete(`https://ikam-weblog-server.onrender.com/posts/${postId}`)
       homenavigate("/")
     } catch (error) {
       console.log(error)
@@ -39,7 +39,7 @@ function Single() {
       try {
         axios.defaults.withCredentials = true;
         
-        const res = await axios.get(`https://evening-plains-24398.herokuapp.com/posts/${postId}`)
+        const res = await axios.get(`https://ikam-weblog-server.onrender.com/posts/${postId}`)
         setPost(res.data)
        
 

@@ -27,12 +27,11 @@ function Write() {
   async function uploadImage(){
      try {
       const formData = new FormData()
-   
-        formData.append("file",file)
+      formData.append("file",file)
       
       
       axios.defaults.withCredentials = true;
-      const res = await axios.post(`https://evening-plains-24398.herokuapp.com/uploads`,formData)
+      const res = await axios.post(`https://ikam-weblog-server.onrender.com/uploads`,formData)
       return res.data
      } catch (e) {
       setResult(e.response.data)
@@ -67,7 +66,7 @@ function Write() {
       try {
         if (state){
           axios.defaults.withCredentials = true
-          await axios.put(`https://evening-plains-24398.herokuapp.com/posts/${state.id}`, {
+          await axios.put(`https://ikam-weblog-server.onrender.com/posts/${state.id}`, {
           title: title,
           description:desc,
           category:cat,
@@ -82,7 +81,7 @@ function Write() {
   
         }else{
           axios.defaults.withCredentials = true
-          await axios.post(`https://evening-plains-24398.herokuapp.com/posts`, {
+          await axios.post(`https://ikam-weblog-server.onrender.com/posts`, {
           title: title,
           description:desc,
           category:cat,
